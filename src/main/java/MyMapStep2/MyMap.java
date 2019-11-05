@@ -5,12 +5,16 @@ import java.util.*;
 
 public class MyMap<K,V> implements Map {
     private Bucket[] buckets;
+    private double loadFactor;
 
     public MyMap() {
-        this.buckets = (Bucket[]) Array.newInstance(Bucket.class,16);
+        this.buckets = (Bucket[]) Array.newInstance(Bucket.class,2);
+        this.loadFactor = 0.75;
     }
-    public MyMap(int buckets) {
-        this.buckets = (Bucket[]) Array.newInstance(Bucket.class,buckets);
+
+    MyMap(int bucketSize, double loadFactor) {
+        this.buckets = (Bucket[]) Array.newInstance(Bucket.class,bucketSize);
+        this.loadFactor = loadFactor;
     }
 
     private int getHash(K key) {
@@ -27,6 +31,19 @@ public class MyMap<K,V> implements Map {
     }
 
     public V put(Object key, Object value){
+        int loadedBuckets = 0;
+        for (int i = 0; i < buckets.length; i++) {
+            if (buckets[i] != null) loadedBuckets++;
+        }
+        if (((double)loadedBuckets / buckets.length) > loadFactor) {
+            Set<Entry> entries = entrySet();
+            this.buckets = (Bucket[]) Array.newInstance(Bucket.class,buckets.length*2);
+            Map map = new HashMap();
+            for (Entry entry: entries) {
+                map.put(entry.getKey(),entry.getValue());
+            }
+            this.putAll(map);
+        }
         int hash = getHash((K) key);
         if (buckets[hash] == null){
             if (key == null && value == null) buckets[hash] = new Bucket(Object.class,Object.class);

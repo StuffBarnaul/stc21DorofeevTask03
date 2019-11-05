@@ -173,11 +173,6 @@ public class MyMapTest {
         assertEquals(map.put("qwe",10),hashmap.put("qwe",10));
         assertEquals(map.put("asd",123456),hashmap.put("asd",123456));
         assertEquals(map.put("qw",10),hashmap.put("qw",10));
-        List list1 = new ArrayList<>(map.values());
-        Collections.sort(list1);
-        List list2 = new ArrayList(hashmap.values());
-        Collections.sort(list2);
-        assertEquals(list1,list2);
         assertTrue(map.values().containsAll(hashmap.values()));
         assertTrue(hashmap.values().containsAll(map.values()));
     }

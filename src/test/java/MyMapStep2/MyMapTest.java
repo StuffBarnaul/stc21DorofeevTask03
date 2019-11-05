@@ -6,11 +6,10 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static java.util.stream.Collectors.groupingBy;
 import static org.junit.Assert.*;
 
 public class MyMapTest {
-    private MyMap map = new MyMap(16);
+    private MyMap map = new MyMap();
     private HashMap hashmap = new HashMap();
     private String s1 = "s1";
     private String s2 = "s2";
@@ -173,7 +172,7 @@ public class MyMapTest {
         assertEquals(map.put(null,78),hashmap.put(null,78));
         assertEquals(map.put("qwe",10),hashmap.put("qwe",10));
         assertEquals(map.put("asd",123456),hashmap.put("asd",123456));
-        assertEquals(map.put("qw",10),hashmap.put("qw",10));
+        assertEquals(map.put("qw",10),hashmap.put("qw",10)); 
         assertTrue(map.values().containsAll(hashmap.values()));
         assertTrue(hashmap.values().containsAll(map.values()));
     }

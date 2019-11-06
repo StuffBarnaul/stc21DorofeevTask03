@@ -83,6 +83,7 @@ public class MyMapTest {
         assertEquals(map.containsKey(null),hashmap.containsKey(null));
         assertEquals(map.containsKey("qwe"),hashmap.containsKey("qwe"));
         assertEquals(map.get("qwe"),hashmap.get("qwe"));
+        assertEquals(map.remove("s1"),hashmap.remove("s1"));
     }
 
     @Test
@@ -98,6 +99,7 @@ public class MyMapTest {
         assertEquals(map.put("asd",123456),hashmap.put("asd",123456));
         assertEquals(map.containsKey(null),hashmap.containsKey(null));
         assertEquals(map.containsKey("qwe"),hashmap.containsKey("qwe"));
+        assertEquals(map.get("123"),hashmap.get("123"));
     }
 
     @Test

@@ -69,7 +69,7 @@ class Bucket<K,V> {
                 return result;
             }
         }
-        throw new NoSuchElementException();
+        return null;
     }
 
     V findElementByKey(K key){

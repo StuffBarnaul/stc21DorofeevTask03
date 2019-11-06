@@ -1,13 +1,16 @@
 package MyMapStep2;
 
+import java.io.*;
 import java.lang.reflect.Array;
 import java.util.*;
+
+
 
 public class MyMap<K,V> implements Map {
     private Bucket[] buckets;
     private double loadFactor;
 
-    public MyMap() {
+    MyMap() {
         this.buckets = (Bucket[]) Array.newInstance(Bucket.class,2);
         this.loadFactor = 0.75;
     }
@@ -56,7 +59,7 @@ public class MyMap<K,V> implements Map {
 
     public V remove(Object key){
         int hash = getHash((K) key);
-        if (buckets[hash] == null) throw new NoSuchElementException();
+        if (buckets[hash] == null) return null;
         return (V) buckets[hash].removeElement(key);
     }
 

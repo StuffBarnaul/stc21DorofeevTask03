@@ -1,4 +1,4 @@
-package MyMapStep2;
+package ru.Dorofeev.Homework.Task03;
 
 import org.junit.After;
 import org.junit.Before;
@@ -6,10 +6,11 @@ import org.junit.Test;
 
 import java.util.*;
 
+import static java.util.stream.Collectors.groupingBy;
 import static org.junit.Assert.*;
 
 public class MyMapTest {
-    private MyMap map = new MyMap();
+    private MyMap map = new MyMap(16);
     private HashMap hashmap = new HashMap();
     private String s1 = "s1";
     private String s2 = "s2";
@@ -83,7 +84,6 @@ public class MyMapTest {
         assertEquals(map.containsKey(null),hashmap.containsKey(null));
         assertEquals(map.containsKey("qwe"),hashmap.containsKey("qwe"));
         assertEquals(map.get("qwe"),hashmap.get("qwe"));
-        assertEquals(map.remove("s1"),hashmap.remove("s1"));
     }
 
     @Test
@@ -99,7 +99,6 @@ public class MyMapTest {
         assertEquals(map.put("asd",123456),hashmap.put("asd",123456));
         assertEquals(map.containsKey(null),hashmap.containsKey(null));
         assertEquals(map.containsKey("qwe"),hashmap.containsKey("qwe"));
-        assertEquals(map.get("123"),hashmap.get("123"));
     }
 
     @Test
@@ -175,7 +174,6 @@ public class MyMapTest {
         assertEquals(map.put("qwe",10),hashmap.put("qwe",10));
         assertEquals(map.put("asd",123456),hashmap.put("asd",123456));
         assertEquals(map.put("qw",10),hashmap.put("qw",10));
-        assertEquals(map.values().retainAll(hashmap.values()),hashmap.values().retainAll(map.values()));
         assertTrue(map.values().containsAll(hashmap.values()));
         assertTrue(hashmap.values().containsAll(map.values()));
     }
@@ -190,4 +188,22 @@ public class MyMapTest {
         assertEquals(map.put("qw",10),hashmap.put("qw",10));
         assertEquals(map.entrySet(),hashmap.entrySet());
     }
+
+    @Test
+    public void equalsAndHash(){
+        Map map2 = new MyMap();
+        map2.put(s1,i1);
+        map2.put(s2,i2);
+        map2.put(s3,i3);
+        map2.put(s4,i4);
+        Map map3 = new MyMap();
+        map3.put(s1,i1);
+        map3.put(s2,i2);
+        map3.put(s3,i3);
+        map3.put(s4,i4);
+        assertEquals(map.hashCode(),map3.hashCode());
+        assertTrue(map.equals(map2));
+        assertTrue(map2.equals(map));
+    }
+
 }

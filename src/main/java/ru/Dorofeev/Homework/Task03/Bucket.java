@@ -1,4 +1,4 @@
-package MyMapStep2;
+package ru.Dorofeev.Homework.Task03;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -69,7 +69,7 @@ class Bucket<K,V> {
                 return result;
             }
         }
-        return null;
+        throw new NoSuchElementException();
     }
 
     V findElementByKey(K key){

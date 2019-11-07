@@ -196,12 +196,14 @@ public class MyMapTest {
         map2.put(s2,i2);
         map2.put(s3,i3);
         map2.put(s4,i4);
-        assertEquals(map.hashCode(),map.hashCode());
-        assertEquals(map, map2);
-        assertEquals(map2, map);
-        map.put("ad",23);
-        assertFalse(map.equals(map2));
-        assertFalse(map2.equals(map));
+        Map map3 = new MyMap();
+        map3.put(s1,i1);
+        map3.put(s2,i2);
+        map3.put(s3,i3);
+        map3.put(s4,i4);
+        assertEquals(map.hashCode(),map3.hashCode());
+        assertTrue(map.equals(map2));
+        assertTrue(map2.equals(map));
     }
 
 }

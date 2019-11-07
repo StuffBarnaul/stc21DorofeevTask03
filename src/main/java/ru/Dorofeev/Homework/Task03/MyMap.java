@@ -1,23 +1,16 @@
-package MyMapStep2;
+package ru.Dorofeev.Homework.Task03;
 
-import java.io.*;
 import java.lang.reflect.Array;
 import java.util.*;
 
-
-
 public class MyMap<K,V> implements Map {
     private Bucket[] buckets;
-    private double loadFactor;
 
-    MyMap() {
-        this.buckets = (Bucket[]) Array.newInstance(Bucket.class,2);
-        this.loadFactor = 0.75;
+    public MyMap() {
+        this.buckets = (Bucket[]) Array.newInstance(Bucket.class,16);
     }
-
-    MyMap(int bucketSize, double loadFactor) {
-        this.buckets = (Bucket[]) Array.newInstance(Bucket.class,bucketSize);
-        this.loadFactor = loadFactor;
+    public MyMap(int buckets) {
+        this.buckets = (Bucket[]) Array.newInstance(Bucket.class,buckets);
     }
 
     private int getHash(K key) {
@@ -34,19 +27,6 @@ public class MyMap<K,V> implements Map {
     }
 
     public V put(Object key, Object value){
-        int loadedBuckets = 0;
-        for (int i = 0; i < buckets.length; i++) {
-            if (buckets[i] != null) loadedBuckets++;
-        }
-        if (((double)loadedBuckets / buckets.length) > loadFactor) {
-            Set<Entry> entries = entrySet();
-            this.buckets = (Bucket[]) Array.newInstance(Bucket.class,buckets.length*2);
-            Map map = new HashMap();
-            for (Entry entry: entries) {
-                map.put(entry.getKey(),entry.getValue());
-            }
-            this.putAll(map);
-        }
         int hash = getHash((K) key);
         if (buckets[hash] == null){
             if (key == null && value == null) buckets[hash] = new Bucket(Object.class,Object.class);
@@ -59,7 +39,7 @@ public class MyMap<K,V> implements Map {
 
     public V remove(Object key){
         int hash = getHash((K) key);
-        if (buckets[hash] == null) return null;
+        if (buckets[hash] == null) throw new NoSuchElementException();
         return (V) buckets[hash].removeElement(key);
     }
 
@@ -140,5 +120,26 @@ public class MyMap<K,V> implements Map {
         for (int i = 0; i < buckets.length; i++) {
             buckets[i] = new Bucket<>(Object.class,Object.class);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (o.hashCode() != this.hashCode()) return false;
+        MyMap<K, V> myMap = (MyMap<K, V>) o;
+        Set<Entry> set1 = this.entrySet();
+        Set<Entry> set2 = myMap.entrySet();
+        return set1.equals(set2);
+    }
+
+    @Override
+    public int hashCode() {
+        Set<Entry> set = this.entrySet();
+        int result = 0;
+        for (Entry entry:set) {
+            result += Objects.hashCode(entry);
+        }
+        return result;
     }
 }
